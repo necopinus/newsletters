@@ -119,7 +119,7 @@ Acceptance, mitigation, and preparation are *not* on deck in Trump's administrat
 I am not sure that I agree that Trump is the first demagogue of the Anthropocene (I think there are other good candidates), but his actions will certainly enable many more. And while Trump's name may eventually be forgotten, the consequences of *our* acquiescence to predatory delay will continue to reverberate for a thousand years.
 
 * [Government by the Worst Men](https://www.slate.com/articles/news_and_politics/politics/2016/11/donald_trump_is_bringing_america_government_by_the_worst_men.html)
-* [Most people are wildly underestimating what Trump's win will mean for the environment](httpx://www.vox.com/science-and-health/2016/11/14/13582562/trump-gop-climate-environmental-policy)
+* [Most people are wildly underestimating what Trump's win will mean for the environment](https://www.vox.com/science-and-health/2016/11/14/13582562/trump-gop-climate-environmental-policy)
 * [Trump, Putin and the Pipelines to Nowhere](https://medium.com/@AlexSteffen/trump-putin-and-the-pipelines-to-nowhere-742d745ce8fd)
 * [Donald Trump Is the First Demagogue of the Anthropocene](https://www.theatlantic.com/science/archive/2016/10/trump-the-first-demagogue-of-the-anthropocene/504134/)
 * [Predatory Delay and the Rights of Future Generations](https://medium.com/@AlexSteffen/predatory-delay-and-the-rights-of-future-generations-69b06094a16)
