@@ -4,15 +4,19 @@
 #
 if [[ -z "$FEED_TITLE" ]]; then
 	echo "FEED_TITLE not set!"
+	exit 1
 fi
 if [[ -z "$FEED_LINK" ]]; then
 	echo "FEED_LINK not set!"
+	exit 1
 fi
 if [[ -z "$FEED_DESCRIPTION" ]]; then
 	echo "FEED_DESCRIPTION not set!"
+	exit 1
 fi
 if [[ -z "$FEED_COPYRIGHT" ]]; then
 	echo "FEED_COPYRIGHT not set!"
+	exit 1
 fi
 
 # GitHub URLs
@@ -22,8 +26,6 @@ RAW_PREFIX="https://github.com/$GITHUB_REPOSITORY/raw/main"
 
 # Construct an array of timestamp + file name + file path
 #
-echo "Constructing list of markdown files..."
-
 FILES_RAW=()
 
 while IFS= read -d '' -r FILE; do
@@ -48,8 +50,6 @@ LAST_PUBDATE="$(date --date="@$LAST_TIMESTAMP" "+%a, %d %b %Y %H:%M:%S %z")"
 
 # Output RSS header
 #
-echo "Beginning RSS feed generation..."
-
 cat << EOF
 <?xml version="1.0" encoding="utf-8"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
@@ -70,8 +70,6 @@ for DATA in "${FILES_SORTED[@]}"; do
 	FILE="$(echo -n "$DATA" | sed -r 's#.*\|\|\|##')"
 	TIMESTAMP="$(echo -n "$DATA" | sed -r 's#\|\|\|.*##')"
 
-	echo "    Reading markdown file: $FILE"
-
 	# https://unix.stackexchange.com/a/552205
 	#
 	CONTENT="$(printf '%s\n' "$(cat "$FILE")" | sed '/./,$!d')"
@@ -83,8 +81,6 @@ for DATA in "${FILES_SORTED[@]}"; do
 
 	# Remove/set title
 	#
-	echo "    Determining entry title..."
-
 	TITLE="$(echo -n "$CONTENT" | head -1)"
 	if [[ "${TITLE:0:2}" == "# " ]]; then
 		TITLE="$(echo -n "$TITLE" | sed -r 's/^# //')"
@@ -95,24 +91,18 @@ for DATA in "${FILES_SORTED[@]}"; do
 
 	# Remove internal date, if it exists
 	#
-	echo "    Removing internal datespec, if applicable..."
-
 	if [[ $(echo -n "$CONTENT" | head -1 | grep -c "date:") -eq 1 ]]; then
 		CONTENT="$(printf '%s\n' "$(echo -n "$CONTENT" | tail -n +2)" | sed '/./,$!d')"
 	fi
 
 	# RSS data
 	#
-	echo "    Generating entry HTML..."
-
 	LINK="$GITHUB_PREFIX/$DIRNAME_ENCODED/$BASENAME_ENCODED.md"
 	DESCRIPTION="$(echo -n "$CONTENT" | pandoc --from=gfm --to=html --wrap=none | sed -r "s#href=\"\.#href=\"$GITHUB_PREFIX/$DIRNAME_ENCODED/.#g;s#src=\"\.#src=\"$RAW_PREFIX/$DIRNAME_ENCODED/.#g;" | sed -r 's#&#\&amp;#g;s#"#\&quot;#g;s#<#\&lt;#g;s#>#\&gt;#g')"
 	PUBDATE="$(date --date="@$TIMESTAMP" "+%a, %d %b %Y %H:%M:%S %z")"
 
 	# Output RSS <item/>
 	#
-	echo "    Outputting RSS item: $TITLE @ $PUBDATE"
-
 	cat << EOF
 		<item>
 			<title>$TITLE</title>
@@ -130,7 +120,3 @@ cat << EOF
 	</channel>
 </rss>
 EOF
-
-# Fin
-#
-echo "RSS feed generation complete!"
